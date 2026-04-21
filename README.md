@@ -2,141 +2,160 @@
 
 ## Overview
 
-This project is a simplified implementation of a Git-like version control system developed as part of the lab exercise. The goal of this project was to understand how version control systems internally manage data such as files, directories, and commits using content-addressable storage.
-
-The system supports basic functionalities such as adding files, creating commits, and viewing commit history.
+PES-VCS is a simplified Git-like version control system implemented in C. It demonstrates how version control systems manage files, directories, and history using content-addressable storage.
 
 ---
 
-## Features Implemented
+## Features
 
+* Repository initialization
+* File staging (index)
 * Object storage using SHA-256 hashing
-* Blob, Tree, and Commit object handling
-* Index (staging area) management
-* Commit creation with parent linking
-* Commit history (log) traversal
+* Tree structure creation
+* Commit and log functionality
 
 ---
 
-## Phase-wise Implementation
+## Technologies Used
 
-### Phase 1: Object Storage
-
-In this phase, we implemented the core object storage system:
-
-* Files are stored as blob objects
-* Each object is identified using a SHA-256 hash
-* Objects are stored inside `.pes/objects/`
+* C Programming
+* OpenSSL (libcrypto)
+* Linux
 
 ---
 
-### Phase 2: Tree Structure
+## Project Structure
 
-* Tree objects were created to represent directory structures
-* Each tree stores file metadata (mode, name, hash)
-* Serialization and parsing of tree objects were implemented
+```
+.
+├── pes.c / pes.h
+├── object.c
+├── index.c
+├── tree.c
+├── commit.c
+├── test_objects.c
+├── test_tree.c
+├── Makefile
+├── screenshots/
+└── README.md
+```
 
 ---
 
-### Phase 3: Index (Staging Area)
+## Execution Steps
 
-* Implemented an index file (`.pes/index`)
-* Supports:
+### Compile
 
-  * Adding files (`pes add`)
-  * Saving and loading index entries
-* Acts as an intermediate stage before committing
+```
+make
+```
 
----
+### Run Phase 1
 
-### Phase 4: Commit System
+```
+./test_objects
+```
 
-* Implemented commit creation with:
+### Run Phase 2
 
-  * Tree reference
-  * Parent commit linkage
-  * Author and timestamp
-* Implemented `pes log` to traverse commit history
+```
+./test_tree
+```
+
+### Initialize Repository
+
+```
+./pes init
+```
+
+### Add Files
+
+```
+./pes add file1.txt
+./pes add file2.txt
+```
+
+### Check Status
+
+```
+./pes status
+```
+
+### Commit Changes
+
+```
+./pes commit -m "first commit"
+```
+
+### View Log
+
+```
+./pes log
+```
 
 ---
 
 ## Screenshots
 
-### Phase 1
+### Phase 1: Object Storage
 
-#### 1A - Test Objects
-![1A](screenshots/1A_test_objects.png)
-
-#### 1B - Object Store
-![1B](screenshots/1B_object_store.png)
+![Phase 1](screenshots/screenshot1A.png)
 
 ---
 
-### Phase 2
+### Phase 2: Tree Structure
 
-#### 2A - Tree Test
-![2A](screenshots/2A_test_tree.png)
-
-#### 2B - Tree Object Hex
-![2B](screenshots/2B_tree_object_hex.png)
+![Phase 2](screenshots/screenshot2A.png)
 
 ---
 
-### Phase 3
+### Phase 2: Object Hex Dump
 
-#### 3A - PES Status
-![3A](screenshots/3A_pes_status.png)
-
-#### 3B - Index File
-![3B](screenshots/3B_index_file.png)
+![Phase 2 Hex](screenshots/screenshot2B.png)
 
 ---
 
-### Phase 4
+### Phase 3: Status Before Adding
 
-#### 4A - PES Log
-![4A](screenshots/4A_pes_log.png)
-
-#### 4B - Object Growth
-![4B](screenshots/4B_object_growth.png)
-
-#### 4C - References
-![4C](screenshots/4C_refs.png)
+![Phase 3A](screenshots/screenshot3A.png)
 
 ---
 
-## Key Concepts Learned
+### Phase 3: Staged Files
 
-* Content-addressable storage
-* Difference between blob, tree, and commit objects
-* How Git internally tracks changes
-* Importance of staging area (index)
-* Parent-child relationship between commits
+![Phase 3B](screenshots/screenshot3B.png)
 
 ---
 
-## Challenges Faced
+### Phase 3: Index Content
 
-* Handling segmentation faults due to incorrect memory usage
-* Understanding object serialization formats
-* Debugging function mismatches (especially object_write)
-* Managing correct data flow between index → tree → commit
+![Phase 3C](screenshots/screenshot3C.png)
 
 ---
 
-## Conclusion
+### Phase 4: Commit Log
 
-This project provided a strong understanding of how version control systems like Git function internally. By building each component step-by-step, it became clear how data is stored, tracked, and retrieved efficiently.
+![Phase 4A](screenshots/screenshot4A.png)
 
 ---
 
-## GitHub Repository
+### Phase 4: Object Growth
 
-[Add your GitHub link here]
+![Phase 4B](screenshots/screenshot4B.png)
+
+---
+
+## Internal Working
+
+* Files are stored as SHA-256 hashed objects
+* Objects are organized as `.pes/objects/<prefix>/<hash>`
+* Index acts as staging area
+* Trees represent directory structure
+* Commits store metadata and history
 
 ---
 
 ## Author
 
-Hemanth Gowda
+Tejas  Gowda
 PES University
